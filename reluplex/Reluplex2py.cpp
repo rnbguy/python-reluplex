@@ -119,7 +119,7 @@ PyObject* setName(PyObject* self, PyObject* args) {
 
 PyObject* setLogging(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
-        bool flag_;
+        int flag_;
 
         PyArg_ParseTuple(args, "Op",
                          &neuralReluplexCapsule_,
@@ -134,7 +134,7 @@ PyObject* setLogging(PyObject* self, PyObject* args) {
 
 PyObject* setDumpStates(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
-        bool flag_;
+        int flag_;
 
         PyArg_ParseTuple(args, "Op",
                          &neuralReluplexCapsule_,
@@ -149,7 +149,7 @@ PyObject* setDumpStates(PyObject* self, PyObject* args) {
 
 PyObject* toggleAlmostBrokenReluEliminiation(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
-        bool flag_;
+        int flag_;
 
         PyArg_ParseTuple(args, "Op",
                          &neuralReluplexCapsule_,
