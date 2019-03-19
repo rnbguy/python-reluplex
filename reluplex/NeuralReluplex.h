@@ -30,12 +30,9 @@ void load_weights(std::vector<std::vector<std::vector<double> > > weights_) {
         reluplex->setLogging(false);
 
         // constant 1
-        setLowerBound(0, 1.0);
-        setUpperBound(0, 1.0);
+        setLowerBound(get_one_constant(), 1.0);
+        setUpperBound(get_one_constant(), 1.0);
 
-        // contest variable, if i beats j, then content = o[i] - o[j] > 0
-        markBasic(1);
-        setLowerBound(1, 0.0);
 
         for(auto layer_i = 0ul; layer_i < weights.size(); layer_i += 2) {
                 if (layer_i != 0) {
@@ -182,6 +179,9 @@ void a_wins_b(unsigned a, unsigned b) {
         initializeCell(contest_variable, contest_variable, -1.0);
         initializeCell(contest_variable, output_a_variable, 1.0);
         initializeCell(contest_variable, output_b_variable, -1.0);
+
+        // contest variable, if i beats j, then content = o[i] - o[j] > 0
+        setLowerBound(1, 0.0);
         markBasic(contest_variable);
 }
 
