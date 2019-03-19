@@ -149,6 +149,21 @@ PyObject* setDumpStates(PyObject* self, PyObject* args) {
         Py_RETURN_NONE;
 }
 
+PyObject* toggleAlmostBrokenReluEliminiation(PyObject* self, PyObject* args) {
+        PyObject* neuralReluplexCapsule_;
+        bool flag_;
+
+        PyArg_ParseTuple(args, "Op",
+                         &neuralReluplexCapsule_,
+                         &flag_);
+
+        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+
+        neuralReluplex->reluplex->toggleAlmostBrokenReluEliminiation(flag_);
+
+        Py_RETURN_NONE;
+}
+
 PyObject* getAssignment(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
         unsigned int variable_;
@@ -436,6 +451,10 @@ PyMethodDef cNeuralReluplexFunctions[] = {
         {"setDumpStates",
          setDumpStates, METH_VARARGS,
          "Set DumpStates flag in NeuralReluplex"},
+
+        {"toggleAlmostBrokenReluEliminiation",
+         toggleAlmostBrokenReluEliminiation, METH_VARARGS,
+         "toggle AlmostBrokenReluEliminiation flag in NeuralReluplex"},
 
         {"solve",
          solve, METH_VARARGS,
