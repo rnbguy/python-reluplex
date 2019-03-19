@@ -24,8 +24,6 @@ void load_weights(std::vector<std::vector<std::vector<double> > > weights_) {
 
         reluplex = new Reluplex(numVariables);
 
-        printf("[PYTHON] Total number of variables in Reluplex %lu\n", numVariables);
-
         reluplex->setLogging(true);
         reluplex->setLogging(false);
 
@@ -122,28 +120,23 @@ unsigned get_a_variable(unsigned i, unsigned j) {
 }
 
 void markBasic(unsigned v) {
-        printf("markBasic(%lu)\n", v);
         reluplex->markBasic(v);
 }
 
 void initializeCell(unsigned v1, unsigned v2, double val) {
-        printf("initializeCell(%lu, %lu, %lf)\n", v1, v2, val);
         reluplex->initializeCell(v1, v2, val);
 }
 
 void setReluPair(unsigned v1, unsigned v2) {
-        printf("setReluPair(%lu, %lu)\n", v1, v2);
         reluplex->setReluPair(v1, v2);
         setLowerBound(v2, 0.0);
 }
 
 void setUpperBound(unsigned v, double val) {
-        printf("setUpperBound(%lu, %lf)\n", v, val);
         reluplex->setUpperBound(v, val);
 }
 
 void setLowerBound(unsigned v, double val) {
-        printf("setLowerBound(%lu, %lf)\n", v, val);
         reluplex->setLowerBound(v, val);
 }
 

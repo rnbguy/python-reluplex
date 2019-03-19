@@ -125,8 +125,6 @@ PyObject* setLogging(PyObject* self, PyObject* args) {
                          &neuralReluplexCapsule_,
                          &flag_);
 
-        printf("flag %d\n", flag_);
-
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
         neuralReluplex->reluplex->setLogging(flag_);
