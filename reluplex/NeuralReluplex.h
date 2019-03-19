@@ -134,6 +134,7 @@ void initializeCell(unsigned v1, unsigned v2, double val) {
 void setReluPair(unsigned v1, unsigned v2) {
         printf("setReluPair(%lu, %lu)\n", v1, v2);
         reluplex->setReluPair(v1, v2);
+        setLowerBound(v2, 0.0);
 }
 
 void setUpperBound(unsigned v, double val) {
