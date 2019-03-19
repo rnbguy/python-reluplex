@@ -279,11 +279,6 @@ PyObject* solve(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        for(auto i = 0ul; i < neuralReluplex->get_new_variable(); ++i) {
-                neuralReluplex->setLowerBound(i, 0.0);
-                neuralReluplex->setUpperBound(i, 1.0);
-        }
-
         Reluplex::FinalStatus result = neuralReluplex->reluplex->solve();
 
         if ( result == Reluplex::SAT )
