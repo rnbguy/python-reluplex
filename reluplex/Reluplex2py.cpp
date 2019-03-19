@@ -248,6 +248,50 @@ PyObject* setInputLowerBound(PyObject* self, PyObject* args) {
         Py_RETURN_NONE;
 }
 
+PyObject* setOutputUpperBound(PyObject* self, PyObject* args) {
+        PyObject* neuralReluplexCapsule_;
+        PyObject *arg_=NULL;
+        PyArrayObject *arr_=NULL;
+
+        PyArg_ParseTuple(args, "OO", &neuralReluplexCapsule_, &arg_);
+
+        // // arr_ = PyArray_FROM_OTF(arg_, NPY_DOUBLE, NPY_IN_ARRAY);
+        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+        arr_ = (PyArrayObject*) arg_;
+
+        npy_intp *sp=PyArray_SHAPE(arr_);
+
+        for (int i=0; i<*sp; i++) {
+                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
+                auto variable_ = neuralReluplex->get_output_i_variable(i);
+                neuralReluplex->reluplex->setUpperBound(variable_, bound_);
+        }
+
+        Py_RETURN_NONE;
+}
+
+PyObject* setOutputLowerBound(PyObject* self, PyObject* args) {
+        PyObject* neuralReluplexCapsule_;
+        PyObject *arg_=NULL;
+        PyArrayObject *arr_=NULL;
+
+        PyArg_ParseTuple(args, "OO", &neuralReluplexCapsule_, &arg_);
+
+        // // arr_ = PyArray_FROM_OTF(arg_, NPY_DOUBLE, NPY_IN_ARRAY);
+        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+        arr_ = (PyArrayObject*) arg_;
+
+        npy_intp *sp=PyArray_SHAPE(arr_);
+
+        for (int i=0; i<*sp; i++) {
+                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
+                unsigned variable_ = neuralReluplex->get_output_i_variable(i);
+                neuralReluplex->reluplex->setLowerBound(variable_, bound_);
+        }
+
+        Py_RETURN_NONE;
+}
+
 PyObject* getOutputAssignment(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
 
@@ -424,6 +468,14 @@ PyMethodDef cNeuralReluplexFunctions[] = {
         {"setInputLowerBound",
          setInputLowerBound, METH_VARARGS,
          "Set lower bounds for input variables"},
+
+        {"setOutputUpperBound",
+         setOutputUpperBound, METH_VARARGS,
+         "Set upper bounds for Output variables"},
+
+        {"setOutputLowerBound",
+         setOutputLowerBound, METH_VARARGS,
+         "Set lower bounds for Output variables"},
 
         {NULL, NULL, 0, NULL}
 };
