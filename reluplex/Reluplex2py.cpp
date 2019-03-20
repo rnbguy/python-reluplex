@@ -177,23 +177,6 @@ PyObject* getAssignment(PyObject* self, PyObject* args) {
         return Py_BuildValue("d", assignment);
 }
 
-PyObject* a_wins_b(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_a_;
-        unsigned int variable_b_;
-
-        PyArg_ParseTuple(args, "OII",
-                         &neuralReluplexCapsule_,
-                         &variable_a_,
-                         &variable_b_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->a_wins_b(variable_a_, variable_b_);
-
-        Py_RETURN_NONE;
-}
-
 PyObject* getInputAssignment(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
 
@@ -473,10 +456,6 @@ PyMethodDef cNeuralReluplexFunctions[] = {
         {"build_network",
          build_network, METH_VARARGS,
          "Build neural network from weights in `NeuralReluplex` object"},
-
-        {"a_wins_b",
-         a_wins_b, METH_VARARGS,
-         "Output_a is bigger than output_b in `NeuralReluplex` object"},
 
         {"setInputUpperBound",
          setInputUpperBound, METH_VARARGS,
