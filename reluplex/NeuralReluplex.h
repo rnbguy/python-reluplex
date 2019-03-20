@@ -61,8 +61,6 @@ unsigned get_output_i_variable(unsigned i) {
         return get_b_variable(get_num_layer()-1, i);
 }
 
-
-
 unsigned layer_size(unsigned layer_i) {
         return weights[layer_i << 1].size();
 }
@@ -112,6 +110,10 @@ unsigned get_a_variable(unsigned i, unsigned j) {
         } else {
                 return it->second;
         }
+}
+
+void setName(unsigned v, const char * s) {
+        reluplex->setName(v, s);
 }
 
 void markBasic(unsigned v) {

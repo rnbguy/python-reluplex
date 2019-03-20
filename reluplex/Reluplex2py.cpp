@@ -29,7 +29,7 @@ PyObject* initializeCell(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->initializeCell(row_, column_, value_);
+        neuralReluplex->initializeCell(row_, column_, value_);
 
         Py_RETURN_NONE;
 }
@@ -44,7 +44,7 @@ PyObject* markBasic(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->markBasic(variable_);
+        neuralReluplex->markBasic(variable_);
 
         Py_RETURN_NONE;
 }
@@ -61,7 +61,7 @@ PyObject* setLowerBound(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->setLowerBound(variable_, bound_);
+        neuralReluplex->setLowerBound(variable_, bound_);
 
         Py_RETURN_NONE;
 }
@@ -78,7 +78,7 @@ PyObject* setUpperBound(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->setUpperBound(variable_, bound_);
+        neuralReluplex->setUpperBound(variable_, bound_);
 
         Py_RETURN_NONE;
 }
@@ -95,7 +95,7 @@ PyObject* setReluPair(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->setReluPair(backward_, forward_);
+        neuralReluplex->setReluPair(backward_, forward_);
 
         Py_RETURN_NONE;
 }
@@ -112,7 +112,7 @@ PyObject* setName(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        neuralReluplex->reluplex->setName(variable_, name_);
+        neuralReluplex->setName(variable_, name_);
 
         Py_RETURN_NONE;
 }
@@ -216,7 +216,7 @@ PyObject* setInputUpperBound(PyObject* self, PyObject* args) {
         for (int i=0; i<*sp; i++) {
                 double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
                 auto variable_ = neuralReluplex->get_input_i_variable(i);
-                neuralReluplex->reluplex->setUpperBound(variable_, bound_);
+                neuralReluplex->setUpperBound(variable_, bound_);
         }
 
         Py_RETURN_NONE;
@@ -238,7 +238,7 @@ PyObject* setInputLowerBound(PyObject* self, PyObject* args) {
         for (int i=0; i<*sp; i++) {
                 double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
                 unsigned variable_ = neuralReluplex->get_input_i_variable(i);
-                neuralReluplex->reluplex->setLowerBound(variable_, bound_);
+                neuralReluplex->setLowerBound(variable_, bound_);
         }
 
         Py_RETURN_NONE;
@@ -260,7 +260,7 @@ PyObject* setOutputUpperBound(PyObject* self, PyObject* args) {
         for (int i=0; i<*sp; i++) {
                 double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
                 auto variable_ = neuralReluplex->get_output_i_variable(i);
-                neuralReluplex->reluplex->setUpperBound(variable_, bound_);
+                neuralReluplex->setUpperBound(variable_, bound_);
         }
 
         Py_RETURN_NONE;
@@ -282,7 +282,7 @@ PyObject* setOutputLowerBound(PyObject* self, PyObject* args) {
         for (int i=0; i<*sp; i++) {
                 double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
                 unsigned variable_ = neuralReluplex->get_output_i_variable(i);
-                neuralReluplex->reluplex->setLowerBound(variable_, bound_);
+                neuralReluplex->setLowerBound(variable_, bound_);
         }
 
         Py_RETURN_NONE;
