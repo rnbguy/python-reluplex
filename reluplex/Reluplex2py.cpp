@@ -190,10 +190,10 @@ PyObject* getInputAssignment(PyObject* self, PyObject* args) {
         int nd = 1;
         npy_intp dims[] = {(long)assignment.size()};
 
-        PyObject* np_assignment = PyArray_SimpleNew(nd, dims, NPY_FLOAT32);
+        PyObject* np_assignment = PyArray_SimpleNew(nd, dims, NPY_DOUBLE);
 
         for(auto i = 0ul; i < assignment.size(); ++i) {
-                auto ptr = (npy_float32*)PyArray_GETPTR1(np_assignment,i);
+                auto ptr = (npy_double*)PyArray_GETPTR1(np_assignment,i);
                 *ptr = assignment[i];
         }
 
@@ -301,10 +301,10 @@ PyObject* getOutputAssignment(PyObject* self, PyObject* args) {
         int nd = 1;
         npy_intp dims[] = {(long)assignment.size()};
 
-        PyObject* np_assignment = PyArray_SimpleNew(nd, dims, NPY_FLOAT32);
+        PyObject* np_assignment = PyArray_SimpleNew(nd, dims, NPY_DOUBLE);
 
         for(auto i = 0ul; i < assignment.size(); ++i) {
-                auto ptr = (npy_float32*)PyArray_GETPTR1(np_assignment,i);
+                auto ptr = (npy_double*)PyArray_GETPTR1(np_assignment,i);
                 *ptr = assignment[i];
         }
 
@@ -364,7 +364,7 @@ PyObject* build_network(PyObject* self, PyObject* args) {
                         npy_intp *sp=PyArray_SHAPE(arr);
                         std::vector<double> layer_weight_i;
                         for (int i = 0; i < *sp; i++) {
-                                layer_weight_i.push_back(*((npy_float32*)PyArray_GETPTR1(arr,i)));
+                                layer_weight_i.push_back(*((npy_double*)PyArray_GETPTR1(arr,i)));
                         }
                         layer_weight.push_back(layer_weight_i);
                 } else if (nd == 2) {
@@ -372,7 +372,7 @@ PyObject* build_network(PyObject* self, PyObject* args) {
                         for (int i=0; i<*sp; i++) {
                                 std::vector<double> layer_weight_i;
                                 for (int j=0; j<*(sp+1); j++) {
-                                        layer_weight_i.push_back(*((npy_float32*)PyArray_GETPTR2(arr,i, j)));
+                                        layer_weight_i.push_back(*((npy_double*)PyArray_GETPTR2(arr,i, j)));
                                 }
                                 layer_weight.push_back(layer_weight_i);
                         }
