@@ -12,7 +12,7 @@ Reluplex *reluplex;
 
 void load_weights(std::vector<std::vector<std::vector<double> > > weights_) {
         weights = weights_;
-        auto numVariables = 2ul;
+        auto numVariables = 1ul;
         for(auto i = 0ul; i < weights.size(); i+=2) {
                 if (i == 0) {
                         numVariables += weights[i].size();
@@ -30,7 +30,6 @@ void load_weights(std::vector<std::vector<std::vector<double> > > weights_) {
         // constant 1
         setLowerBound(get_one_constant(), 1.0);
         setUpperBound(get_one_constant(), 1.0);
-
 
         for(auto layer_i = 0ul; layer_i < weights.size(); layer_i += 2) {
                 if (layer_i != 0) {
@@ -72,12 +71,8 @@ unsigned get_one_constant() {
         return 0;
 }
 
-unsigned get_contest_variable() {
-        return 1;
-}
-
 unsigned get_new_variable() {
-        return f_variable.size() + b_variable.size() + a_variable.size() + 2;
+        return f_variable.size() + b_variable.size() + a_variable.size() + 1;
 }
 
 unsigned get_f_variable(unsigned i, unsigned j) {
@@ -96,7 +91,7 @@ unsigned get_b_variable(unsigned i, unsigned j) {
         auto it = b_variable.find(std::make_pair(i, j));
 
         if (it == b_variable.end()) {
-                unsigned v = f_variable.size() + b_variable.size() + a_variable.size() + 2;
+                unsigned v = get_new_variable();
                 b_variable.insert(std::make_pair(std::make_pair(i, j), v));
                 return v;
         } else {
@@ -108,7 +103,7 @@ unsigned get_a_variable(unsigned i, unsigned j) {
         auto it = a_variable.find(std::make_pair(i, j));
 
         if (it == a_variable.end()) {
-                unsigned v = f_variable.size() + b_variable.size() + a_variable.size() + 2;
+                unsigned v = get_new_variable();
                 a_variable.insert(std::make_pair(std::make_pair(i, j), v));
                 markBasic(v);
                 setLowerBound(v, 0.0);
@@ -161,22 +156,6 @@ void add_relu_pair(unsigned layer_i) {
                 auto f = get_f_variable(layer_i, i);
                 setReluPair(b, f);
         }
-}
-
-void a_wins_b(unsigned a, unsigned b) {
-        auto output_a_variable = get_output_i_variable(a);
-        auto output_b_variable = get_output_i_variable(b);
-
-        auto contest_variable = get_contest_variable();
-
-        // contest = output_a - output_b
-        initializeCell(contest_variable, contest_variable, -1.0);
-        initializeCell(contest_variable, output_a_variable, 1.0);
-        initializeCell(contest_variable, output_b_variable, -1.0);
-
-        // contest variable, if i beats j, then content = o[i] - o[j] > 0
-        setLowerBound(1, 0.0);
-        markBasic(contest_variable);
 }
 
 std::vector<double> getInputAssignment() {
