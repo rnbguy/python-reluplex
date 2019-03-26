@@ -1,6 +1,7 @@
 #ifndef __NeuralReluplex_h__
 #define __NeuralReluplex_h__
 
+#include <ReluplexGate.h>
 #include <Reluplex.h>
 
 #include <vector>
@@ -8,37 +9,75 @@
 
 class NeuralReluplex {
 public:
-Reluplex *reluplex;
+ReluplexGate *reluplexgate;
 
 void load_weights(std::vector<std::vector<std::vector<double> > > weights_) {
         weights = weights_;
-        auto numVariables = 1ul;
-        for(auto i = 0ul; i < weights.size(); i+=2) {
-                if (i == 0) {
-                        numVariables += weights[i].size();
-                } else {
-                        numVariables += weights[i].size() * 3;
-                }
+
+        reluplexgate = new ReluplexGate();
+
+        input_variables = new std::vector<unsigned>();
+        for(auto i = 0ul; i < weights[0].size(); ++i) {
+                input_variables->push_back(reluplexgate->get_new_variable());
         }
-        numVariables += weights[weights.size()-1][0].size() * 2;
 
-        reluplex = new Reluplex(numVariables);
-
-        reluplex->setLogging(true);
-        reluplex->setLogging(false);
-
-        // constant 1
-        setLowerBound(get_one_constant(), 1.0);
-        setUpperBound(get_one_constant(), 1.0);
+        std::vector<unsigned> curr(input_variables->begin(), input_variables->end());
 
         for(auto layer_i = 0ul; layer_i < weights.size(); layer_i += 2) {
                 if (layer_i != 0) {
-                        add_relu_pair(layer_i >> 1);
+                        std::vector<unsigned> curr_next;
+                        for(auto a: curr) {
+                                curr_next.push_back(reluplexgate->relu(a));
+                        }
+                        curr.swap(curr_next);
                 }
+                std::vector<unsigned> curr_next;
                 for(auto neuron_i = 0ul; neuron_i < weights[layer_i][0].size(); ++neuron_i) {
-                        add_linear_relation(layer_i >> 1, neuron_i);
+                        std::vector<double> w;
+                        for(auto w_l: weights[layer_i]) {
+                                w.push_back(w_l[neuron_i]);
+                        }
+                        curr_next.push_back(reluplexgate->apply_linear_op(curr, w, weights[layer_i+1][0][neuron_i]));
+                }
+                curr.swap(curr_next);
+        }
+
+        output_variables = new std::vector<unsigned>(curr.begin(), curr.end());
+}
+
+void input_interval_box(std::vector<double> l_bound, std::vector<double> u_bound) {
+        reluplexgate->from_interval_box(*input_variables, l_bound, u_bound);
+}
+
+void input_neg_interval_box(std::vector<double> l_bound, std::vector<double> u_bound) {
+        reluplexgate->not_from_interval_box(*input_variables, l_bound, u_bound);
+}
+
+void i_output_does_not_win(unsigned i) {
+        std::vector<unsigned> others;
+        for(auto a: *output_variables) {
+                if(a != output_variables->at(i)) {
+                        others.push_back(a);
                 }
         }
+        auto max_others = reluplexgate->max(others);
+        reluplexgate->greater_than(max_others, output_variables->at(i));
+}
+
+inline void greater_than_equal(unsigned a, unsigned b) {
+        reluplexgate->greater_than_equal(a, b);
+}
+
+inline void greater_than(unsigned a, unsigned b) {
+        reluplexgate->greater_than(a, b);
+}
+
+void build_reluplex() {
+        reluplex = reluplexgate->get_reluplex();
+}
+
+Reluplex::FinalStatus solve() {
+        return reluplex->solve();
 }
 
 unsigned get_num_layer() {
@@ -54,117 +93,27 @@ unsigned get_num_output_variable() {
 }
 
 unsigned get_input_i_variable(unsigned i) {
-        return get_f_variable(0, i);
+        return input_variables->at(i);
 }
 
 unsigned get_output_i_variable(unsigned i) {
-        return get_b_variable(get_num_layer()-1, i);
+        return output_variables->at(i);
 }
 
 unsigned layer_size(unsigned layer_i) {
         return weights[layer_i << 1].size();
 }
 
-unsigned get_one_constant() {
-        return 0;
-}
-
-unsigned get_new_variable() {
-        return f_variable.size() + b_variable.size() + a_variable.size() + 1;
-}
-
-unsigned get_f_variable(unsigned i, unsigned j) {
-        auto it = f_variable.find(std::make_pair(i, j));
-
-        if (it == f_variable.end()) {
-                unsigned v = get_new_variable();
-                f_variable.insert(std::make_pair(std::make_pair(i, j), v));
-                return v;
-        } else {
-                return it->second;
-        }
-}
-
-unsigned get_b_variable(unsigned i, unsigned j) {
-        auto it = b_variable.find(std::make_pair(i, j));
-
-        if (it == b_variable.end()) {
-                unsigned v = get_new_variable();
-                b_variable.insert(std::make_pair(std::make_pair(i, j), v));
-                return v;
-        } else {
-                return it->second;
-        }
-}
-
-unsigned get_a_variable(unsigned i, unsigned j) {
-        auto it = a_variable.find(std::make_pair(i, j));
-
-        if (it == a_variable.end()) {
-                unsigned v = get_new_variable();
-                a_variable.insert(std::make_pair(std::make_pair(i, j), v));
-                markBasic(v);
-                setLowerBound(v, 0.0);
-                setUpperBound(v, 0.0);
-                return v;
-        } else {
-                return it->second;
-        }
-}
-
 void setName(unsigned v, const char * s) {
+        // printf("setName(%u, %s)\n", v, s);
         reluplex->setName(v, s);
-}
-
-void markBasic(unsigned v) {
-        reluplex->markBasic(v);
-}
-
-void initializeCell(unsigned v1, unsigned v2, double val) {
-        reluplex->initializeCell(v1, v2, val);
-}
-
-void setReluPair(unsigned v1, unsigned v2) {
-        reluplex->setReluPair(v1, v2);
-        setLowerBound(v2, 0.0);
-}
-
-void setUpperBound(unsigned v, double val) {
-        reluplex->setUpperBound(v, val);
-}
-
-void setLowerBound(unsigned v, double val) {
-        reluplex->setLowerBound(v, val);
-}
-
-void add_linear_relation(unsigned layer_i, unsigned neuron_i) {
-        auto y_a = get_a_variable(layer_i + 1, neuron_i);
-        auto y = get_b_variable(layer_i + 1, neuron_i);
-        auto c = get_one_constant();
-
-        initializeCell(y_a, y_a, -1.0);
-        initializeCell(y_a, y, -1.0);
-
-        for(auto i = 0ul; i < weights[layer_i << 1].size(); ++i) {
-                auto x_i = get_f_variable(layer_i, i);
-                initializeCell(y_a, x_i, weights[layer_i << 1][i][neuron_i]);
-        }
-        initializeCell(y_a, c, weights[(layer_i << 1) + 1][0][neuron_i]);
-}
-
-void add_relu_pair(unsigned layer_i) {
-        for(auto i = 0u; i < layer_size(layer_i); ++i) {
-                auto b = get_b_variable(layer_i, i);
-                auto f = get_f_variable(layer_i, i);
-                setReluPair(b, f);
-        }
 }
 
 std::vector<double> getInputAssignment() {
         std::vector<double> assignment;
 
-        for(auto i = 0ul; i < get_num_input_variable(); i++) {
-                assignment.push_back(reluplex->getAssignment(get_input_i_variable(i)));
+        for(auto v: *input_variables) {
+                assignment.push_back(reluplex->getAssignment(v));
         }
 
         return assignment;
@@ -173,22 +122,25 @@ std::vector<double> getInputAssignment() {
 std::vector<double> getOutputAssignment() {
         std::vector<double> assignment;
 
-        for(auto i = 0ul; i < get_num_output_variable(); i++) {
-                assignment.push_back(reluplex->getAssignment(get_output_i_variable(i)));
+        for(auto v: *output_variables) {
+                assignment.push_back(reluplex->getAssignment(v));
         }
 
         return assignment;
 }
 
 ~NeuralReluplex() {
+        delete input_variables;
+        delete output_variables;
+        delete reluplexgate;
         delete reluplex;
 }
 
 private:
+Reluplex *reluplex;
 std::vector<std::vector<std::vector<double> > > weights;
-std::map<std::pair<unsigned, unsigned>, unsigned> f_variable;
-std::map<std::pair<unsigned, unsigned>, unsigned> b_variable;
-std::map<std::pair<unsigned, unsigned>, unsigned> a_variable;
+std::vector<unsigned> * input_variables;
+std::vector<unsigned> * output_variables;
 };
 
 

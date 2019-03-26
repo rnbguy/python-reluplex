@@ -14,168 +14,168 @@ PyObject* construct(PyObject* self, PyObject* args) {
 
         return Py_BuildValue("O", neuralReluplexCapsule);
 }
+//
+// PyObject* initializeCell(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int row_;
+//         unsigned int column_;
+//         double value_;
+//
+//         PyArg_ParseTuple(args, "OIId",
+//                          &neuralReluplexCapsule_,
+//                          &row_,
+//                          &column_,
+//                          &value_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->initializeCell(row_, column_, value_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* markBasic(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int variable_;
+//
+//         PyArg_ParseTuple(args, "OI",
+//                          &neuralReluplexCapsule_,
+//                          &variable_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->markBasic(variable_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setLowerBound(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int variable_;
+//         double bound_;
+//
+//         PyArg_ParseTuple(args, "OId",
+//                          &neuralReluplexCapsule_,
+//                          &variable_,
+//                          &bound_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->setLowerBound(variable_, bound_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setUpperBound(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int variable_;
+//         double bound_;
+//
+//         PyArg_ParseTuple(args, "OId",
+//                          &neuralReluplexCapsule_,
+//                          &variable_,
+//                          &bound_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->setUpperBound(variable_, bound_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setReluPair(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int backward_;
+//         unsigned int forward_;
+//
+//         PyArg_ParseTuple(args, "OII",
+//                          &neuralReluplexCapsule_,
+//                          &backward_,
+//                          &forward_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->setReluPair(backward_, forward_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setName(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int variable_;
+//         const char* name_;
+//
+//         PyArg_ParseTuple(args, "OIs",
+//                          &neuralReluplexCapsule_,
+//                          &variable_,
+//                          &name_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->setName(variable_, name_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setLogging(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         int flag_;
+//
+//         PyArg_ParseTuple(args, "Op",
+//                          &neuralReluplexCapsule_,
+//                          &flag_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->reluplex->setLogging(flag_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* setDumpStates(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         int flag_;
+//
+//         PyArg_ParseTuple(args, "Op",
+//                          &neuralReluplexCapsule_,
+//                          &flag_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->reluplex->setDumpStates(flag_);
+//
+//         Py_RETURN_NONE;
+// }
+//
+// PyObject* toggleAlmostBrokenReluEliminiation(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         int flag_;
+//
+//         PyArg_ParseTuple(args, "Op",
+//                          &neuralReluplexCapsule_,
+//                          &flag_);
+//
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+//
+//         neuralReluplex->reluplex->toggleAlmostBrokenReluEliminiation(flag_);
+//
+//         Py_RETURN_NONE;
+// }
 
-PyObject* initializeCell(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int row_;
-        unsigned int column_;
-        double value_;
-
-        PyArg_ParseTuple(args, "OIId",
-                         &neuralReluplexCapsule_,
-                         &row_,
-                         &column_,
-                         &value_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->initializeCell(row_, column_, value_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* markBasic(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_;
-
-        PyArg_ParseTuple(args, "OI",
-                         &neuralReluplexCapsule_,
-                         &variable_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->markBasic(variable_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setLowerBound(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_;
-        double bound_;
-
-        PyArg_ParseTuple(args, "OId",
-                         &neuralReluplexCapsule_,
-                         &variable_,
-                         &bound_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->setLowerBound(variable_, bound_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setUpperBound(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_;
-        double bound_;
-
-        PyArg_ParseTuple(args, "OId",
-                         &neuralReluplexCapsule_,
-                         &variable_,
-                         &bound_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->setUpperBound(variable_, bound_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setReluPair(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int backward_;
-        unsigned int forward_;
-
-        PyArg_ParseTuple(args, "OII",
-                         &neuralReluplexCapsule_,
-                         &backward_,
-                         &forward_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->setReluPair(backward_, forward_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setName(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_;
-        const char* name_;
-
-        PyArg_ParseTuple(args, "OIs",
-                         &neuralReluplexCapsule_,
-                         &variable_,
-                         &name_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->setName(variable_, name_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setLogging(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        int flag_;
-
-        PyArg_ParseTuple(args, "Op",
-                         &neuralReluplexCapsule_,
-                         &flag_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->reluplex->setLogging(flag_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setDumpStates(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        int flag_;
-
-        PyArg_ParseTuple(args, "Op",
-                         &neuralReluplexCapsule_,
-                         &flag_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->reluplex->setDumpStates(flag_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* toggleAlmostBrokenReluEliminiation(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        int flag_;
-
-        PyArg_ParseTuple(args, "Op",
-                         &neuralReluplexCapsule_,
-                         &flag_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        neuralReluplex->reluplex->toggleAlmostBrokenReluEliminiation(flag_);
-
-        Py_RETURN_NONE;
-}
-
-PyObject* getAssignment(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        unsigned int variable_;
-
-        PyArg_ParseTuple(args, "OI",
-                         &neuralReluplexCapsule_,
-                         &variable_);
-
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-
-        double assignment = neuralReluplex->reluplex->getAssignment(variable_);
-
-        return Py_BuildValue("d", assignment);
-}
+// PyObject* getAssignment(PyObject* self, PyObject* args) {
+//         PyObject* neuralReluplexCapsule_;
+//         unsigned int variable_;
+// 
+//         PyArg_ParseTuple(args, "OI",
+//                          &neuralReluplexCapsule_,
+//                          &variable_);
+// 
+//         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
+// 
+//         double assignment = neuralReluplex->reluplex->getAssignment(variable_);
+// 
+//         return Py_BuildValue("d", assignment);
+// }
 
 PyObject* getInputAssignment(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
@@ -200,7 +200,7 @@ PyObject* getInputAssignment(PyObject* self, PyObject* args) {
         return np_assignment;
 }
 
-PyObject* setInputUpperBound(PyObject* self, PyObject* args) {
+PyObject* inputFromIntervalBox(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
         PyObject *arg_=NULL;
         PyArrayObject *arr_=NULL;
@@ -213,16 +213,19 @@ PyObject* setInputUpperBound(PyObject* self, PyObject* args) {
 
         npy_intp *sp=PyArray_SHAPE(arr_);
 
+        std::vector<double> l_bound;
+        std::vector<double> u_bound;
         for (int i=0; i<*sp; i++) {
-                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
-                auto variable_ = neuralReluplex->get_input_i_variable(i);
-                neuralReluplex->setUpperBound(variable_, bound_);
+                l_bound.push_back(*((npy_double*)PyArray_GETPTR2(arr_,i, 0)));
+                u_bound.push_back(*((npy_double*)PyArray_GETPTR2(arr_,i, 1)));
         }
+
+        neuralReluplex->input_interval_box(l_bound, u_bound);
 
         Py_RETURN_NONE;
 }
 
-PyObject* setInputLowerBound(PyObject* self, PyObject* args) {
+PyObject* inputNotFromIntervalBox(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
         PyObject *arg_=NULL;
         PyArrayObject *arr_=NULL;
@@ -235,55 +238,27 @@ PyObject* setInputLowerBound(PyObject* self, PyObject* args) {
 
         npy_intp *sp=PyArray_SHAPE(arr_);
 
+        std::vector<double> l_bound;
+        std::vector<double> u_bound;
         for (int i=0; i<*sp; i++) {
-                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
-                unsigned variable_ = neuralReluplex->get_input_i_variable(i);
-                neuralReluplex->setLowerBound(variable_, bound_);
+                l_bound.push_back(*((npy_double*)PyArray_GETPTR2(arr_,i, 0)));
+                u_bound.push_back(*((npy_double*)PyArray_GETPTR2(arr_,i, 1)));
         }
+
+        neuralReluplex->input_neg_interval_box(l_bound, u_bound);
 
         Py_RETURN_NONE;
 }
 
-PyObject* setOutputUpperBound(PyObject* self, PyObject* args) {
+PyObject* i_does_not_win(PyObject* self, PyObject* args) {
         PyObject* neuralReluplexCapsule_;
-        PyObject *arg_=NULL;
-        PyArrayObject *arr_=NULL;
+        unsigned i;
 
-        PyArg_ParseTuple(args, "OO", &neuralReluplexCapsule_, &arg_);
+        PyArg_ParseTuple(args, "OI", &neuralReluplexCapsule_, &i);
 
-        // // arr_ = PyArray_FROM_OTF(arg_, NPY_DOUBLE, NPY_IN_ARRAY);
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-        arr_ = (PyArrayObject*) arg_;
 
-        npy_intp *sp=PyArray_SHAPE(arr_);
-
-        for (int i=0; i<*sp; i++) {
-                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
-                auto variable_ = neuralReluplex->get_output_i_variable(i);
-                neuralReluplex->setUpperBound(variable_, bound_);
-        }
-
-        Py_RETURN_NONE;
-}
-
-PyObject* setOutputLowerBound(PyObject* self, PyObject* args) {
-        PyObject* neuralReluplexCapsule_;
-        PyObject *arg_=NULL;
-        PyArrayObject *arr_=NULL;
-
-        PyArg_ParseTuple(args, "OO", &neuralReluplexCapsule_, &arg_);
-
-        // // arr_ = PyArray_FROM_OTF(arg_, NPY_DOUBLE, NPY_IN_ARRAY);
-        NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
-        arr_ = (PyArrayObject*) arg_;
-
-        npy_intp *sp=PyArray_SHAPE(arr_);
-
-        for (int i=0; i<*sp; i++) {
-                double bound_ = *((npy_double*)PyArray_GETPTR1(arr_,i));
-                unsigned variable_ = neuralReluplex->get_output_i_variable(i);
-                neuralReluplex->setLowerBound(variable_, bound_);
-        }
+        neuralReluplex->i_output_does_not_win(i);
 
         Py_RETURN_NONE;
 }
@@ -319,7 +294,8 @@ PyObject* solve(PyObject* self, PyObject* args) {
 
         NeuralReluplex* neuralReluplex = (NeuralReluplex*)PyCapsule_GetPointer(neuralReluplexCapsule_, "NeuralReluplexPtr");
 
-        Reluplex::FinalStatus result = neuralReluplex->reluplex->solve();
+        neuralReluplex->build_reluplex();
+        Reluplex::FinalStatus result = neuralReluplex->solve();
 
         if ( result == Reluplex::SAT )
                 return Py_BuildValue("I", 0);
@@ -397,45 +373,45 @@ PyMethodDef cNeuralReluplexFunctions[] = {
          construct, METH_VARARGS,
          "Create `NeuralReluplex` object"},
 
-        {"initializeCell",
-         initializeCell, METH_VARARGS,
-         "Initialize cells in NeuralReluplex"},
-
-        {"markBasic",
-         markBasic, METH_VARARGS,
-         "Mark Basic variables in NeuralReluplex"},
-
-        {"setLowerBound",
-         setLowerBound, METH_VARARGS,
-         "Set lower bound of a variable in NeuralReluplex"},
-
-        {"setUpperBound",
-         setUpperBound, METH_VARARGS,
-         "Set upper bound of a variable in NeuralReluplex"},
-
-        {"setReluPair",
-         setReluPair, METH_VARARGS,
-         "Set ReluPair of two forward and backward variables in NeuralReluplex"},
-
-        {"setName",
-         setName, METH_VARARGS,
-         "Set name of a variable in NeuralReluplex"},
-
-        {"getAssignment",
-         getAssignment, METH_VARARGS,
-         "Get assignment of a variable in NeuralReluplex"},
-
-        {"setLogging",
-         setLogging, METH_VARARGS,
-         "Set logging flag in NeuralReluplex"},
-
-        {"setDumpStates",
-         setDumpStates, METH_VARARGS,
-         "Set DumpStates flag in NeuralReluplex"},
-
-        {"toggleAlmostBrokenReluEliminiation",
-         toggleAlmostBrokenReluEliminiation, METH_VARARGS,
-         "toggle AlmostBrokenReluEliminiation flag in NeuralReluplex"},
+        // {"initializeCell",
+        //  initializeCell, METH_VARARGS,
+        //  "Initialize cells in NeuralReluplex"},
+        //
+        // {"markBasic",
+        //  markBasic, METH_VARARGS,
+        //  "Mark Basic variables in NeuralReluplex"},
+        //
+        // {"setLowerBound",
+        //  setLowerBound, METH_VARARGS,
+        //  "Set lower bound of a variable in NeuralReluplex"},
+        //
+        // {"setUpperBound",
+        //  setUpperBound, METH_VARARGS,
+        //  "Set upper bound of a variable in NeuralReluplex"},
+        //
+        // {"setReluPair",
+        //  setReluPair, METH_VARARGS,
+        //  "Set ReluPair of two forward and backward variables in NeuralReluplex"},
+        //
+        // {"setName",
+        //  setName, METH_VARARGS,
+        //  "Set name of a variable in NeuralReluplex"},
+        //
+        // {"getAssignment",
+        //  getAssignment, METH_VARARGS,
+        //  "Get assignment of a variable in NeuralReluplex"},
+        //
+        // {"setLogging",
+        //  setLogging, METH_VARARGS,
+        //  "Set logging flag in NeuralReluplex"},
+        //
+        // {"setDumpStates",
+        //  setDumpStates, METH_VARARGS,
+        //  "Set DumpStates flag in NeuralReluplex"},
+        //
+        // {"toggleAlmostBrokenReluEliminiation",
+        //  toggleAlmostBrokenReluEliminiation, METH_VARARGS,
+        //  "toggle AlmostBrokenReluEliminiation flag in NeuralReluplex"},
 
         {"solve",
          solve, METH_VARARGS,
@@ -457,21 +433,17 @@ PyMethodDef cNeuralReluplexFunctions[] = {
          build_network, METH_VARARGS,
          "Build neural network from weights in `NeuralReluplex` object"},
 
-        {"setInputUpperBound",
-         setInputUpperBound, METH_VARARGS,
-         "Set upper bounds for input variables"},
+        {"inputFromIntervalBox",
+         inputFromIntervalBox, METH_VARARGS,
+         "Input are from this interval box"},
 
-        {"setInputLowerBound",
-         setInputLowerBound, METH_VARARGS,
-         "Set lower bounds for input variables"},
+        {"inputNotFromIntervalBox",
+         inputNotFromIntervalBox, METH_VARARGS,
+         "Input are not from this interval box"},
 
-        {"setOutputUpperBound",
-         setOutputUpperBound, METH_VARARGS,
-         "Set upper bounds for Output variables"},
-
-        {"setOutputLowerBound",
-         setOutputLowerBound, METH_VARARGS,
-         "Set lower bounds for Output variables"},
+        {"i_does_not_win",
+         i_does_not_win, METH_VARARGS,
+         "i-th output does not win"},
 
         {NULL, NULL, 0, NULL}
 };
