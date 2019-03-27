@@ -86,7 +86,7 @@ inline unsigned get_one() {
         return 0;
 }
 
-unsigned mod(unsigned a) {
+unsigned absolute(unsigned a) {
         auto a_p = relu(a);
         auto a_n = relu(neg(a));
         return apply_linear_op({a_p, a_n}, {1, 1}, 0);
